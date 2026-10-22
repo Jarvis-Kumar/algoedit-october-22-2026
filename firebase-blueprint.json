@@ -1,0 +1,378 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and usage stats.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "tokens": { "type": "number" },
+        "creatorTier": { "type": "string", "enum": ["Explorer", "Creator", "Pro", "Visionary"] },
+        "paypalSubscriptionId": { "type": "string" },
+        "subscriptionStatus": { "type": "string" },
+        "subscriptionPlan": { "type": "string" },
+        "creditBalance": { "type": "number" },
+        "joinedAt": { "type": "string", "format": "date-time" },
+        "plan": { "type": "string", "enum": ["Free", "Pro", "Creator", "Business"] },
+        "storageUsed": { "type": "number" },
+        "storageLimit": { "type": "number" },
+        "baseStorage": { "type": "number" },
+        "purchasedAddonStorage": { "type": "number" },
+        "totalFiles": { "type": "number" },
+        "lastStorageUpdate": { "type": "string", "format": "date-time" },
+        "bio": { "type": "string" },
+        "username": { "type": "string" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "theme": { "type": "string" },
+            "notifications": { "type": "boolean" },
+            "privacy": { "type": "string" }
+          }
+        },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "totalGenerations": { "type": "number" },
+            "totalProjects": { "type": "number" }
+          }
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Real-time system or social notification.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "desc": { "type": "string" },
+        "time": { "type": "string" },
+        "icon": { "type": "string", "enum": ["zap", "sparkles", "user", "bell"] },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "desc", "read"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "AI creative project canvas.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "draft", "archived"] },
+        "thumbnail": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "assets": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name", "ownerId"]
+    },
+    "Template": {
+      "title": "Template",
+      "description": "Saved AI workflow or preset.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "toolId": { "type": "string" },
+        "config": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "ownerId", "toolId"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "Favorited item on the platform.",
+      "type": "object",
+      "properties": {
+        "itemId": { "type": "string" },
+        "type": { "type": "string", "enum": ["tool", "project", "template", "model"] },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["itemId", "type", "userId"]
+    },
+    "StorageFile": {
+      "title": "Storage File",
+      "description": "Metadata of a file hosted on Cloudflare R2 storage.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "key": { "type": "string" },
+        "size": { "type": "number" },
+        "type": { "type": "string", "enum": ["image", "video", "preset", "document"] },
+        "contentType": { "type": "string" },
+        "url": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "key", "size", "type"]
+    },
+    "StorageAddon": {
+      "title": "Storage Addon",
+      "description": "Purchased storage expansion add-on record.",
+      "type": "object",
+      "properties": {
+        "addonId": { "type": "string" },
+        "userId": { "type": "string" },
+        "storageAmount": { "type": "number" },
+        "purchaseDate": { "type": "string", "format": "date-time" },
+        "expirationDate": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["paid", "pending", "failed"] },
+        "packageId": { "type": "string" }
+      },
+      "required": ["addonId", "userId", "storageAmount", "paymentStatus"]
+    },
+    "PayPalSubscription": {
+      "title": "PayPal Subscription",
+      "description": "Record mapping PayPal Subscription to a local user and state.",
+      "type": "object",
+      "properties": {
+        "subscriptionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "planAlias": { "type": "string" },
+        "currency": { "type": "string" },
+        "tokens": { "type": "number" },
+        "billingPeriod": { "type": "string" },
+        "status": { "type": "string" },
+        "activatedAt": { "type": "string", "format": "date-time" },
+        "cancelledAt": { "type": "string", "format": "date-time" },
+        "expiredAt": { "type": "string", "format": "date-time" },
+        "suspendedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["subscriptionId", "userId", "status"]
+    },
+    "PayPalPayment": {
+      "title": "PayPal Payment",
+      "description": "PayPal transaction or order recording credit allocations.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "tokens": { "type": "number" },
+        "packId": { "type": "string" },
+        "currency": { "type": "string" },
+        "allocatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "tokens"]
+    },
+    "PayPalWebhookEvent": {
+      "title": "PayPal Webhook Event log",
+      "description": "Auditable log of received and processed PayPal events.",
+      "type": "object",
+      "properties": {
+        "eventId": { "type": "string" },
+        "eventType": { "type": "string" },
+        "receivedAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" },
+        "payload": { "type": "object" },
+        "processedAt": { "type": "string", "format": "date-time" },
+        "failedAt": { "type": "string", "format": "date-time" },
+        "error": { "type": "string" }
+      },
+      "required": ["eventId", "eventType", "status"]
+    },
+    "PayPalPaymentFailure": {
+      "title": "PayPal Payment Failure",
+      "description": "Log of failed or denied payment transactions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "transactionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "object" },
+        "reason": { "type": "string" },
+        "deniedAt": { "type": "string", "format": "date-time" },
+        "rawData": { "type": "object" }
+      },
+      "required": ["id", "userId"]
+    },
+    "PayPalRefund": {
+      "title": "PayPal Refund",
+      "description": "Log of refunded transactions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "currency": { "type": "string" },
+        "refundedAt": { "type": "string", "format": "date-time" },
+        "rawData": { "type": "object" }
+      },
+      "required": ["id", "userId"]
+    },
+    "SentEmail": {
+      "title": "Sent Email",
+      "description": "Auditable log of sent emails.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "to": { "type": "string" },
+        "subject": { "type": "string" },
+        "htmlContent": { "type": "string" },
+        "category": { "type": "string" },
+        "sentAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "to", "subject", "status"]
+    },
+    "TeamMember": {
+      "title": "Team Member",
+      "description": "A member inside a workspace team.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["Owner", "Head", "Team Member"] },
+        "isBetterPerformer": { "type": "boolean" }
+      },
+      "required": ["userId", "name", "role"]
+    },
+    "Team": {
+      "title": "Database Team Workspace",
+      "description": "Global collaborative workspace team details.",
+      "type": "object",
+      "properties": {
+        "teamId": { "type": "string" },
+        "teamName": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerSubscription": { "type": "string", "enum": ["Free", "Pro", "Creator+", "Business"] },
+        "includedMemberCapacity": { "type": "number" },
+        "purchasedAdditionalCapacity": { "type": "number" },
+        "totalCapacity": { "type": "number" },
+        "currentMemberCount": { "type": "number" },
+        "availableMemberSlots": { "type": "number" },
+        "members": { "type": "array", "items": { "type": "object" } }
+      },
+      "required": ["teamId", "teamName", "ownerId", "ownerSubscription", "members"]
+    },
+    "TeamChatMessage": {
+      "title": "Team Chat Message",
+      "description": "A message sent in a team chat channel.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "senderId", "senderName", "text", "timestamp"]
+    },
+    "TeamInvitation": {
+      "title": "Team Invitation",
+      "description": "A pending or processed team invitation.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teamId": { "type": "string" },
+        "teamName": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "recipientEmail": { "type": "string" },
+        "role": { "type": "string", "enum": ["Head", "Team Member"] },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "teamId", "teamName", "senderId", "senderName", "recipientEmail", "role", "status", "createdAt"]
+    },
+    "CreatorProfile": {
+      "title": "Creator Public Profile",
+      "description": "Public directory of creators for collaboration.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "subscriptionPlan": { "type": "string", "enum": ["Free", "Pro", "Creator+", "Business"] },
+        "personalAiLimits": { "type": "string" },
+        "personalStorage": { "type": "string" },
+        "personalDownloads": { "type": "string" },
+        "personalExports": { "type": "string" },
+        "teamRole": { "type": "string", "enum": ["Owner", "Head", "Team Member"] },
+        "currentTeamId": { "type": "string" },
+        "country": { "type": "string" },
+        "countryCode": { "type": "string" }
+      },
+      "required": ["userId", "name", "subscriptionPlan", "country", "countryCode"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Primary user profile document."
+    },
+    "users/{userId}/notifications/{notifId}": {
+      "schema": "Notification",
+      "description": "User-specific notifications."
+    },
+    "users/{userId}/favorites/{favId}": {
+      "schema": "Favorite",
+      "description": "User-specific favorites."
+    },
+    "users/{userId}/storageFiles/{fileId}": {
+      "schema": "StorageFile",
+      "description": "User-specific files metadata."
+    },
+    "users/{userId}/storageAddons/{addonId}": {
+      "schema": "StorageAddon",
+      "description": "User-specific purchased storage add-ons."
+    },
+    "projects/{projectId}": {
+      "schema": "Project",
+      "description": "Main project collection."
+    },
+    "templates/{templateId}": {
+      "schema": "Template",
+      "description": "Shared and private templates."
+    },
+    "paypal_subscriptions/{subscriptionId}": {
+      "schema": "PayPalSubscription",
+      "description": "Primary subscription mappings collection."
+    },
+    "paypal_payments/{paymentId}": {
+      "schema": "PayPalPayment",
+      "description": "Primary one-time/recurring payments collection."
+    },
+    "paypal_webhook_events/{eventId}": {
+      "schema": "PayPalWebhookEvent",
+      "description": "Idempotency and auditing webhook events collection."
+    },
+    "paypal_payment_failures/{failureId}": {
+      "schema": "PayPalPaymentFailure",
+      "description": "Declined and denied payment events collection."
+    },
+    "paypal_refunds/{refundId}": {
+      "schema": "PayPalRefund",
+      "description": "Refunded payment events collection."
+    },
+    "sent_emails/{emailId}": {
+      "schema": "SentEmail",
+      "description": "Central dispatch logs for email system."
+    },
+    "teams/{teamId}": {
+      "schema": "Team",
+      "description": "Primary workspace team document."
+    },
+    "teams/{teamId}/messages/{messageId}": {
+      "schema": "TeamChatMessage",
+      "description": "Messages sent within a team workspace."
+    },
+    "invitations/{invitationId}": {
+      "schema": "TeamInvitation",
+      "description": "Global team workspace invitations."
+    },
+    "creators/{creatorEmail}": {
+      "schema": "CreatorProfile",
+      "description": "Public registry of creators."
+    }
+  }
+}

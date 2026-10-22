@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default deny for unlisted documents
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connectivity Test
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read, write: if true;
+
+      match /storageFiles/{fileId} {
+        allow read, write: if true;
+      }
+      match /storageAddons/{addonId} {
+        allow read, write: if true;
+      }
+      match /notifications/{notifId} {
+        allow read, write: if true;
+      }
+      match /favorites/{favId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Projects Collection
+    match /projects/{projectId} {
+      allow read, write: if true;
+
+      match /versions/{versionId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Templates Collection
+    match /templates/{templateId} {
+      allow read, write: if true;
+    }
+
+    // Drafts Collection
+    match /drafts/{draftId} {
+      allow read, write: if true;
+    }
+
+    // Teams Collection
+    match /teams/{teamId} {
+      allow read, write: if true;
+
+      match /messages/{messageId} {
+        allow read, write: if true;
+      }
+      match /activity_history/{activityId} {
+        allow read, write: if true;
+      }
+      match /shared_assets/{assetId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Invitations Collection
+    match /invitations/{invitationId} {
+      allow read, write: if true;
+    }
+
+    // Creators Directory Collection
+    match /creators/{creatorEmail} {
+      allow read, write: if true;
+
+      match /notifications_v2/{notifId} {
+        allow read, write: if true;
+      }
+    }
+
+    // Recycle Bin Collection
+    match /recycle_bin/{binId} {
+      allow read, write: if true;
+    }
+
+    // Audit Logs Collection
+    match /audit_logs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Resumable Uploads Collection
+    match /resumable_uploads/{uploadId} {
+      allow read, write: if true;
+    }
+
+    // Sent Emails Collection
+    match /sent_emails/{emailId} {
+      allow read, write: if true;
+    }
+
+    // Contact Messages Collection
+    match /contact_messages/{msgId} {
+      allow read, write: if true;
+    }
+  }
+}

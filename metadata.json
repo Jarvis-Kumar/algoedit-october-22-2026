@@ -1,0 +1,6 @@
+{
+  "name": "AlgoEdit AI Studio",
+  "description": "A premium, futuristic AI-powered creative studio for next-generation video and image editing. Features a professional-grade command console, real-time AI feedback, and high-fidelity synthesis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /history
+
+Sitemap: https://ais-pre-rosawfzwgoqac6egsaum7x-145278888165.asia-east1.run.app/sitemap.xml

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        const isScriptError = function(msg, url) {
+          const m = String(msg || '');
+          const u = String(url || '');
+          return (
+            m.includes('Script error') ||
+            m === 'Script error.' ||
+            u.includes('chrome-extension') ||
+            u.includes('moz-extension')
+          );
+        };
+        window.onerror = function(msg, url, lineNo, colNo, error) {
+          if (isScriptError(msg, url) || !url || !error) {
+            return true;
+          }
+        };
+        window.addEventListener('error', function(event) {
+          if (isScriptError(event.message, event.filename) || !event.filename || !event.error) {
+            try {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            } catch (e) {}
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', function(event) {
+          const reasonStr = String(event.reason || '');
+          if (
+            reasonStr.includes('Script error') ||
+            reasonStr.includes('ResizeObserver loop completed with undelivered notifications') ||
+            reasonStr.includes('ResizeObserver loop limit exceeded')
+          ) {
+            try {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            } catch (e) {}
+          }
+        }, true);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="theme-color" content="#050709" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ALGOEDIT - High-Performance AI Studio & Creative Media Engine</title>
+    <meta name="description" content="ALGOEDIT is a next-generation high-performance AI studio, preset marketplace, and creative media engine designed for professional creators, developers, and media teams." />
+    <meta name="keywords" content="ALGOEDIT, AI Media Studio, Creative Studio, Preset Marketplace, Image Studio, Neural Editing, Wallpaper Studio, High-Performance AI" />
+    <meta name="author" content="ALGOEDIT Team" />
+    
+    <!-- OpenGraph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ais-pre-rosawfzwgoqac6egsaum7x-145278888165.asia-east1.run.app" />
+    <meta property="og:title" content="ALGOEDIT - High-Performance AI Studio & Creative Media Engine" />
+    <meta property="og:description" content="ALGOEDIT is a next-generation high-performance AI studio, preset marketplace, and creative media engine designed for professional creators, developers, and media teams." />
+    <meta property="og:image" content="/vite.svg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://ais-pre-rosawfzwgoqac6egsaum7x-145278888165.asia-east1.run.app" />
+    <meta property="twitter:title" content="ALGOEDIT - High-Performance AI Studio & Creative Media Engine" />
+    <meta property="twitter:description" content="ALGOEDIT is a next-generation high-performance AI studio, preset marketplace, and creative media engine designed for professional creators, developers, and media teams." />
+    <meta property="twitter:image" content="/vite.svg" />
+
+    <!-- Structured Data (JSON-LD) for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ALGOEDIT",
+        "url": "https://ais-pre-rosawfzwgoqac6egsaum7x-145278888165.asia-east1.run.app",
+        "description": "ALGOEDIT is a next-generation high-performance AI studio, preset marketplace, and creative media engine designed for professional creators, developers, and media teams.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+</head>
+  <body class="bg-[#050709] text-[#F5F7F8]">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
